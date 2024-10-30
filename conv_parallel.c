@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<omp.h>
+#include <time.h>
 int main(){
     // ---- input and malloc A, F ----
     int NA, NF;
@@ -17,21 +18,28 @@ int main(){
     // ---- end input and malloc----
 
     // implement here
-    omp_set_num_threads(8);
     int *FF = malloc(sizeof(int) * NF);
     int *R = malloc(sizeof(int) * (NA-NF+1));
 
     for(int i=0;i<NF;++i)
         FF[i]=F[NF-i-1];
-    #pragma omp parallel for
-    for(int i=0;i<NA-NF+1;++i){
-        int s=0;
-        for(int j=0;j<NF;++j)
-            s+=A[i+j]*FF[j];
-        R[i]=s;
+clock_t a = clock();
+
+    #pragma omp parallel num_threads(8)
+    {
+        #pragma omp for
+        for(int i=0;i<NA-NF+1;++i){
+            int s=0;
+            for(int j=0;j<NF;++j)
+                s+=A[i+j]*FF[j];
+            R[i]=s;
+        }
     }
+clock_t b = clock();
     for(int i=0;i<NA-NF+1;i++)
         printf("%d\n",R[i]);
+
+    //printf("%d",b-a);
     free(FF);
     free(R);
     // ---- free memory ----
@@ -40,4 +48,3 @@ int main(){
     // ---- end free ----
     return 0;
 }
-
