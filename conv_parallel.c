@@ -31,6 +31,8 @@ int main(){
             s+=A[i+j]*FF[j];
         R[i]=s;
     }
+    for(int i=0;i<NA-NF+1;i++)
+        printf("%d\n",R[i]);
     free(FF);
     free(R);
     // ---- free memory ----
