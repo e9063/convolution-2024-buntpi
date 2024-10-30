@@ -24,13 +24,13 @@ int main(){
     for(int i=0;i<NF;++i)
         FF[i]=F[NF-i-1];
 
-    for(int i=0;i<NA-NF+1;++i){
+    for(int i=0;i<NA-NF+1;i++){
         int s=0;
-        for(int j=0;j<NF;++j)
+        for(int j=0;j<NF;j++)
             s+=A[i+j]*FF[j];
         R[i]=s;
     }
-    for(int i=0;i<NA-NF+1;++i)
+    for(int i=0;i<NA-NF+1;i++)
         printf("%d\n",R[i]);
         
     free(FF);
