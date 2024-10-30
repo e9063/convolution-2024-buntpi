@@ -31,6 +31,8 @@ int main(){
             s+=A[i+j]*FF[j];
         R[i]=s;
     }
+    free(FF);
+    free(R);
     // ---- free memory ----
     free(F);
     free(A);
